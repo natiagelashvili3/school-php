@@ -1,0 +1,101 @@
+@import "fonts.css";
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "roboto-regular";
+}
+
+.action-btn{
+    text-decoration: none;
+    color: black;
+    margin-right: 5px;
+}
+.action-btn:hover{
+    border-bottom: 1px solid black;
+}
+
+.header{
+    text-align: right;
+    padding: 19px 25px;
+}
+
+.header a{
+    text-decoration: none;
+    color: white;
+    font-size: 21px;
+    margin-right: 7px;
+    padding: 2px 3px;
+}
+
+.header a:hover{
+    border-bottom: 1px solid white;
+}
+
+#image{
+    background-image: url("../images/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#form-section{
+    margin-top: 27px;
+}
+
+#form-section .container{
+    text-align: center;
+}
+#form-section .content{
+    background-color: white;
+    display: inline-block;
+    padding: 51px 63px;
+    border-radius: 4px;
+}
+
+#form-section .content h1{
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
+#form-section .content form label{
+    display: block;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+#form-section .content form input{
+    width: 287px;
+    padding: 6px 12px;
+    margin-bottom: 20px;
+    border-color: #00be92;
+}
+#form-section .content form button{
+    background-color: #00be92;
+    padding: 8px 18px;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    margin-top: 10px;
+    font-size: 15px;action-btn
+}
+#form-section .content form .error{
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #1694ce;
+}
+
+#book-list{
+    border-collapse: collapse;
+    width: 79%;
+    margin: 23px auto;
+}
+  
+#book-list td, th {
+    border: 2px solid #fff;
+    padding: 12px 21px;
+}
+  
+#book-list thead {
+    background-color: #ffffff80;
+    font-weight: 800;
+    font-size: 17px;
+}
