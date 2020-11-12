@@ -2,21 +2,6 @@
 
 <?php
 
-if($_POST['action'] == 'edit-book') {
-   
-    $update_query = "UPDATE books 
-                        SET book_name = :book_name, author = :author, release_date = :release_date
-                    WHERE id = :id";
-    $stm = $myDatabase->prepare($update_query);
-    $stm->execute([
-        'id' => $_POST['id'],
-        'book_name' => $_POST['book-name'],
-        'author' => $_POST['author'],
-        'release_date' => $_POST['release-date']
-    ]);
-                    
-} 
-
 if(!isset($_GET) || !$_GET['id']) {
     echo "Error!";
     die();
@@ -35,7 +20,7 @@ $book = $stm->fetch();
     <div class="container">
         <div class="content">
             <h1>Insert Book</h1>
-            <form id="books" action="" method="POST">
+            <form id="books" action="actions.php" method="POST">
                 <input type="hidden" value="edit-book" name="action">
                 <input type="hidden" value="<?= $_GET['id'] ?>" name="id">
                 <div>
@@ -50,11 +35,6 @@ $book = $stm->fetch();
                     <label>Release date</label>
                     <input type="number" name="release-date" placeholder = "Enter Book's release date" value="<?= $book['release_date'] ?>">
                 </div>
-                <?php if(!$bookname || !$author || !$releasedate): ?>
-                    <div class="error">
-                        Please fill in all fields
-                    </div>
-                <?php endif; ?>
                 <button>Submit</button>
             </form>
         </div>

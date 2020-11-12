@@ -11,11 +11,37 @@ if(isset($_POST) && isset($_POST['action'])) {
     $releasedate = isset($_POST["release-date"]) ? $_POST["release-date"] : null;
 
     if($_POST['action'] == 'add-book') {
+
+        $sourceName = '';
+
+        // UPLOAD FILE ON SERVER
+        if (isset($_FILES) && !empty($_FILES)) {
+
+            if (!file_exists('uploads/')) {
+                mkdir('uploads/');
+            }
+
+            $tmp_name = $_FILES['source']['tmp_name'];
+            $name = $_FILES['source']['name']; // alizi.txt
+            $extension = pathinfo($name)['extension'];
+            $filename = pathinfo($name)['filename'];
+
+            $sourceName = $filename . '-' . time() . '.' . $extension;
+            $destination = 'uploads/' . $sourceName;
+
+            move_uploaded_file($tmp_name, $destination); 
+
+        }
+
         // Adding Books
         if ($bookname && $author && $releasedate) {
             // Insert Query
-            $insert_query = "INSERT INTO books (`book_name`, `author`, `release_date`) VALUES (?, ?, ?)";
-            $myDatabase->prepare($insert_query)->execute([$bookname, $author, $releasedate]);
+            $insert_query = "INSERT INTO books (`book_name`, `author`, `release_date`, `source`) 
+                             VALUES (?, ?, ?, ?)";
+            $myDatabase->prepare($insert_query)
+            ->execute([$bookname, $author, $releasedate, $sourceName]);
+
+            header("Location: /" );
         }
 
     } else if($_POST['action'] == 'edit-book') {
@@ -32,6 +58,8 @@ if(isset($_POST) && isset($_POST['action'])) {
                 'author' => $author,
                 'release_date' => $releasedate
             ]);
+
+            header("Location: /edit.php?id=".$_POST['id'] );
                             
         }
     } else if(isset($_POST['action']) && $_POST['action'] == 'delete-book') {
@@ -43,7 +71,6 @@ if(isset($_POST) && isset($_POST['action'])) {
             ]);       
             
             $status = true;
-
             echo $status;
         }
     } 

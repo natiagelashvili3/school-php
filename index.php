@@ -1,6 +1,5 @@
 <?php 
     include("components/header.php");
-    include("action.php");
 ?>  
 
 <?php    
@@ -22,7 +21,8 @@
                         <td>Id</td>
                         <td>Book's Name</td>
                         <td>Author</td>
-                        <td>Release Date</td> 
+                        <td>Release Date</td>
+                        <td>Source</td> 
                         <td>Actions</td>
                     </tr>
                 </thead>
@@ -35,6 +35,17 @@
                             <td><?= $row["book_name"]?></td>
                             <td><?= $row["author"]?></td>
                             <td><?= $row["release_date"]?></td>
+                            <td>
+                                <?php 
+                                    if ($row["source"]) {
+                                        if (file_exists('uploads/'.$row['source'])) {
+                                            ?>
+                                                <a target="_blank" href="uploads/<?= $row["source"] ?>"><?= $row["source"] ?></a>
+                                            <?php
+                                        }
+                                    }
+                                 ?>
+                            </td>
                             <td>
                                 <a href="edit.php?id=<?= $row["id"] ?>" class="action-btn btn-edit">
                                     Edit
