@@ -14,32 +14,41 @@ if(isset($_POST) && isset($_POST['action'])) {
 
         $sourceName = '';
 
-        // UPLOAD FILE ON SERVER
-        if (isset($_FILES) && !empty($_FILES)) {
-
-            if (!file_exists('uploads/')) {
-                mkdir('uploads/');
-            }
-
-            $tmp_name = $_FILES['source']['tmp_name'];
-            $name = $_FILES['source']['name']; // alizi.txt
-            $extension = pathinfo($name)['extension'];
-            $filename = pathinfo($name)['filename'];
-
-            $sourceName = $filename . '-' . time() . '.' . $extension;
-            $destination = 'uploads/' . $sourceName;
-
-            move_uploaded_file($tmp_name, $destination); 
-
-        }
-
         // Adding Books
         if ($bookname && $author && $releasedate) {
             // Insert Query
-            $insert_query = "INSERT INTO books (`book_name`, `author`, `release_date`, `source`) 
-                             VALUES (?, ?, ?, ?)";
+            $insert_query = "INSERT INTO books (`book_name`, `author`, `release_date`) 
+                             VALUES (?, ?, ?)";
             $myDatabase->prepare($insert_query)
-            ->execute([$bookname, $author, $releasedate, $sourceName]);
+            ->execute([$bookname, $author, $releasedate]);
+
+            $id = $myDatabase->lastInsertId(); 
+
+            // UPLOAD FILE ON SERVER
+            if (isset($_FILES) && !empty($_FILES)) {
+
+                if (!file_exists('uploads/')) {
+                    mkdir('uploads/');
+                }
+
+                $tmp_name = $_FILES['source']['tmp_name'];
+                $name = $_FILES['source']['name'];
+                $extension = pathinfo($name)['extension'];
+                $filename = pathinfo($name)['filename'];
+
+                $sourceName = $filename . '-' . $id . '.' . $extension;
+                $destination = 'uploads/' . $sourceName;
+
+                move_uploaded_file($tmp_name, $destination); 
+
+                $update_query = "UPDATE books SET source = :source WHERE id = :id";
+                $stm = $myDatabase->prepare($update_query);
+                $stm->execute([
+                    'source' => $sourceName,
+                    'id' => $id
+                ]);
+
+            }
 
             header("Location: /" );
         }
@@ -47,19 +56,42 @@ if(isset($_POST) && isset($_POST['action'])) {
     } else if($_POST['action'] == 'edit-book') {
         // Edit Books
         if (isset($_POST['id']) && $bookname && $author && $releasedate) {
+            $id = $_POST['id'];
+            $sourceName = '';
+
+            //UPLOAD FILE ON SERVER
+            if (isset($_FILES) && !empty($_FILES)) {
+
+                if (!file_exists('uploads/')) {
+                    mkdir('uploads/');
+                }
+
+                $tmp_name = $_FILES['source']['tmp_name'];
+                $name = $_FILES['source']['name'];
+                $extension = pathinfo($name)['extension'];
+                $filename = pathinfo($name)['filename'];
+
+                $sourceName = $filename . '-' . $id . '.' . $extension;
+                $destination = 'uploads/' . $sourceName;
+
+                move_uploaded_file($tmp_name, $destination); 
+
+            }
+            
             // Update Query
             $update_query = "UPDATE books 
-                                SET book_name = :book_name, author = :author, release_date = :release_date
+                                SET book_name = :book_name, author = :author, release_date = :release_date, source = :source
                               WHERE id = :id";
             $stm = $myDatabase->prepare($update_query);
             $stm->execute([
-                'id' => $_POST['id'],
+                'id' => $id,
                 'book_name' => $bookname,
                 'author' => $author,
-                'release_date' => $releasedate
+                'release_date' => $releasedate,
+                'source' => $sourceName
             ]);
 
-            header("Location: /edit.php?id=".$_POST['id'] );
+            header("Location: edit.php?id=".$_POST['id'] );
                             
         }
     } else if(isset($_POST['action']) && $_POST['action'] == 'delete-book') {

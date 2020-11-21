@@ -20,7 +20,7 @@ $book = $stm->fetch();
     <div class="container">
         <div class="content">
             <h1>Insert Book</h1>
-            <form id="books" action="actions.php" method="POST">
+            <form id="books" action="actions.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" value="edit-book" name="action">
                 <input type="hidden" value="<?= $_GET['id'] ?>" name="id">
                 <div>
@@ -34,6 +34,20 @@ $book = $stm->fetch();
                 <div>
                     <label>Release date</label>
                     <input type="number" name="release-date" placeholder = "Enter Book's release date" value="<?= $book['release_date'] ?>">
+                </div>
+                <div>
+                    <label>Book Source</label>
+                    <?php 
+                        $source = '';
+                        if($book['source'] && file_exists('uploads/'.$book['source'])) {
+                            ?>
+                                <div>
+                                    <a href="<?= 'uploads/'.$book['source'] ?>"><?= $book['source'] ?></a>
+                                </div>
+                            <?php
+                        }
+                    ?>
+                    <input type="file" name="source">
                 </div>
                 <button>Submit</button>
             </form>

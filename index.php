@@ -2,10 +2,28 @@
     include("components/header.php");
 ?>  
 
-<?php    
+<?php
 
+    
+    $orderBy = '';
 
-    $query = "SELECT * FROM books";
+    if(!empty($_GET) && isset($_GET['ord'])) {
+        $orderValue = $_GET['ord'];
+        $orderParameters = explode('-', $orderValue);
+        
+        if(count($orderParameters) == 2) {
+            $fieldName = $orderParameters[0]; // id, book_name
+            $fieldValue = $orderParameters[1]; // asc, desc
+
+            if ( in_array($fieldName, ['id', 'book_name']) && in_array($fieldValue, ['asc', 'desc']) ) {
+                $orderBy = " ORDER BY " . $fieldName . " " . $fieldValue;
+            }            
+
+        }
+
+    }
+    
+    $query = "SELECT * FROM books".$orderBy;
     $students = $myDatabase->prepare($query);
     $students->execute();
 
@@ -15,6 +33,14 @@
 <section id="list-section">
     <div class="container">
         <div class="content">
+
+            <div class="sort">
+                <a href="?ord=id-asc">Order by ID ASC</a>
+                <a href="?ord=id-desc">Order by ID DESC</a>
+                <a href="?ord=book_name-asc">Order by Name ASC</a>
+                <a href="?ord=book_name-desc">Order by Name DESC</a>
+            </div>
+
             <table id="book-list">
                 <thead>
                     <tr>

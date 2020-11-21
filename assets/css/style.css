@@ -19,6 +19,11 @@
     padding: 19px 25px;
 }
 
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
 .header a{
     text-decoration: none;
     color: white;
@@ -85,7 +90,7 @@
 
 #book-list{
     border-collapse: collapse;
-    width: 79%;
+    width: 100%;
     margin: 23px auto;
 }
   
@@ -98,4 +103,14 @@
     background-color: #ffffff80;
     font-weight: 800;
     font-size: 17px;
+}
+
+.sort a{
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    margin-right: 10px;
+}
+.sort a:hover{
+    border-bottom: 1px solid white;
 }
