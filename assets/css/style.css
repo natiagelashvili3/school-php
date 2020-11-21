@@ -114,3 +114,23 @@
 .sort a:hover{
     border-bottom: 1px solid white;
 }
+
+.filters {
+    margin-top: 20px;
+}
+.filters .form-group{
+    display: inline-block;
+}
+.filters input, 
+.filters select{
+    padding: 8px 10px;
+    border: none;
+    background: #fffffff0;
+    border-radius: 3px;
+}
+.filters button{
+    padding: 9px 10px;
+    border: 0;
+    background: white;
+    border-radius: 2px;
+}
