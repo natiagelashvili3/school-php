@@ -11,6 +11,7 @@
     <header class="header">
         <div class="menu">
             <a href="add.php">Add Book</a>
+            <a href="authors.php">Authors</a>
             <a href="index.php">Books List</a>
         </div>
     </header>  

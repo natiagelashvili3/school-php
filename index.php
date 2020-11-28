@@ -22,7 +22,7 @@
             $fieldValue = $orderParameters[1]; // asc, desc
 
             if ( in_array($fieldName, ['id', 'book_name']) && in_array($fieldValue, ['asc', 'desc']) ) {
-                $orderBy = " ORDER BY " . $fieldName . " " . $fieldValue;
+                $orderBy = " ORDER BY books." . $fieldName . " " . $fieldValue;
                 $order_parameter = $_GET['order'];
             }            
 
@@ -31,12 +31,12 @@
     }
 
     if (!empty($_GET) && isset($_GET['book_name']) && $_GET['book_name'] != '') {
-        $where[] = "`book_name` LIKE '%".$_GET['book_name']."%'";
+        $where[] = "books.book_name LIKE '%".$_GET['book_name']."%'";
         $book_name = $_GET['book_name'];
     }
 
     if (!empty($_GET) && isset($_GET['release_date']) && $_GET['release_date'] != '') {
-        $where[] = "`release_date` = ".$_GET['release_date'];
+        $where[] = "books.release_date = ".$_GET['release_date'];
         $release_date = $_GET['release_date'];
     }
 
@@ -52,11 +52,12 @@
 
     // $query .= $orderBy;
      
-    $query = "SELECT * 
-                FROM books " . ( $whereCondition != '' ? " WHERE ".$whereCondition : '' ) . $orderBy;
+    $query = "SELECT books.*, authors.*
+                FROM books 
+                INNER JOIN authors ON books.author_id = authors.id " . ( $whereCondition != '' ? " WHERE ".$whereCondition : '' ) . $orderBy;
 
-    $students = $myDatabase->prepare($query);
-    $students->execute();
+    $books = $myDatabase->prepare($query);
+    $books->execute();
 
 ?>
 
@@ -109,12 +110,12 @@
                 </thead>
                 <tbody>
                     <?php
-                        while($row = $students->fetch()) {
+                        while($row = $books->fetch()) {
                         ?>
                         <tr>
                             <td><?= $row["id"]?></td>
                             <td><?= $row["book_name"]?></td>
-                            <td><?= $row["author"]?></td>
+                            <td><?= $row["name"] ?></td>
                             <td><?= $row["release_date"]?></td>
                             <td>
                                 <?php 

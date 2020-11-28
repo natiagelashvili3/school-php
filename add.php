@@ -1,5 +1,14 @@
 <?php include("components/header.php") ?> 
 
+<?php 
+
+$query = "SELECT * FROM authors";
+
+$authors = $myDatabase->prepare($query);
+$authors->execute();
+
+?>
+
 <section id="form-section">
     <div class="container">
         <div class="content">
@@ -12,7 +21,13 @@
                 </div>
                 <div>
                     <label>Author</label>
-                    <input type="text" name="author" placeholder="Enter Book's Author">
+                    <select name="author_id" id="">
+                        <?php
+                            while($row = $authors->fetch()) {
+                            ?>
+                            <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div>
                     <label>Release date</label>

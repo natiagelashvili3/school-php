@@ -7,7 +7,7 @@ $status = false;
 if(isset($_POST) && isset($_POST['action'])) {
 
     $bookname = isset($_POST["book-name"]) ? $_POST["book-name"] : null;
-    $author = isset($_POST["author"]) ? $_POST["author"] : null;
+    $author = isset($_POST["author_id"]) ? $_POST["author_id"] : 0;
     $releasedate = isset($_POST["release-date"]) ? $_POST["release-date"] : null;
 
     if($_POST['action'] == 'add-book') {
@@ -17,7 +17,7 @@ if(isset($_POST) && isset($_POST['action'])) {
         // Adding Books
         if ($bookname && $author && $releasedate) {
             // Insert Query
-            $insert_query = "INSERT INTO books (`book_name`, `author`, `release_date`) 
+            $insert_query = "INSERT INTO books (`book_name`, `author_id`, `release_date`) 
                              VALUES (?, ?, ?)";
             $myDatabase->prepare($insert_query)
             ->execute([$bookname, $author, $releasedate]);
@@ -105,5 +105,11 @@ if(isset($_POST) && isset($_POST['action'])) {
             $status = true;
             echo $status;
         }
-    } 
+    } else if(isset($_POST['action']) && $_POST['action'] == 'add-author') {
+        $insert_query = "INSERT INTO authors (`name`) VALUES (?)";
+
+        $myDatabase->prepare($insert_query)->execute([$_POST['name']]);
+
+        header("Location: authors.php" );
+    }
 }
