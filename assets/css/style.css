@@ -26,7 +26,7 @@
 
 .header a{
     text-decoration: none;
-    color: white;
+    color: #464646;
     font-size: 21px;
     margin-right: 7px;
     padding: 2px 3px;
@@ -37,10 +37,7 @@
 }
 
 #image{
-    background-image: url("../images/background.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: #ececec;
 }
 #form-section{
     margin-top: 27px;
@@ -54,6 +51,7 @@
     display: inline-block;
     padding: 51px 63px;
     border-radius: 4px;
+    min-width: 600px;
 }
 
 #form-section .content h1{
@@ -67,15 +65,20 @@
     margin-bottom: 6px;
 }
 
-#form-section .content form input,
-#form-section .content form select{
+form input,
+form select,
+form textarea{
     width: 287px;
-    padding: 6px 12px;
+    padding: 14px 12px;
     margin-bottom: 20px;
-    border-color: #00be92;
     background: transparent;
+    border: 1px solid gray;
+    width: 100%;
 }
-#form-section .content form button{
+form textarea{
+    height: 200px;
+}
+form button{
     background-color: #00be92;
     padding: 8px 18px;
     color: white;
@@ -135,4 +138,96 @@
     border: 0;
     background: white;
     border-radius: 2px;
+}
+
+
+.post-list{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.post-item{
+    flex: 0 0 25%;
+}
+.post-item .content{
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #c3c3c3;
+}
+.post-item .content h2,
+.post-item .content p{
+    margin-bottom: 10px;
+}
+
+#posts{
+    margin-top: 100px;
+}
+
+.post-artcile h1{
+    margin-bottom: 10px;
+}
+.comment-container{
+    margin-top: 50px;
+}
+.comment-container>div{
+    margin-bottom: 10px;
+}
+.comment-container>h2{
+    margin-bottom: 20px;
+}
+.comments-list li{
+    list-style-type: none;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #d9d9d9;
+}
+.comments-list {
+    margin-bottom: 20px;
+}
+.comments-list li span{
+    font-style: italic;
+    color: gray;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+table, td, th {  
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
+
+.pagination {
+    display: inline-block;
+}
+.page-container{
+    margin-bottom: 150px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin-top: 50px;
+}
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
 }

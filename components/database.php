@@ -2,11 +2,11 @@
         $servername  = "localhost";
         $username = "admin";
         $password = "admin123";
-        $database_name = "school-project";
+        $database_name = "school-post";
 
     try{
 
-        $myDatabase = new PDO("mysql:host=localhost;dbname=school-project", $username, $password);
+        $myDatabase = new PDO("mysql:host=localhost;dbname=".$database_name, $username, $password);
 
     }catch(Exeption $e){
 

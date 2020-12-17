@@ -1,149 +1,50 @@
 <?php 
     include("components/header.php");
+
+    $perPage = 4;
+    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1 ;
+
+    $count_query = $myDatabase->prepare("SELECT COUNT(*) as cnt FROM posts");
+    $count_query->execute();
+    $total_cnt = $count_query->fetchColumn(); //18
+
+    $paging = ceil($total_cnt / $perPage);
+
+    $offset = $perPage * ($currentPage - 1);
+
+    $query = "SELECT p.*, c.name as category_name
+                FROM posts p
+          INNER JOIN categories c ON p.category_id = c.id
+               LIMIT ".$perPage." OFFSET ".$offset;
+
+    $posts = $myDatabase->prepare($query);
+    $posts->execute();
+
 ?>  
 
-<?php
-
-    
-    $orderBy = '';
-    $where = [];
-    $whereCondition = '';
-
-    $book_name = '';
-    $release_date = '';
-    $order_parameter = ''; 
-
-    if(!empty($_GET) && isset($_GET['order'])) {
-        $orderValue = $_GET['order'];
-        $orderParameters = explode('-', $orderValue);
-        
-        if(count($orderParameters) == 2) {
-            $fieldName = $orderParameters[0]; // id, book_name
-            $fieldValue = $orderParameters[1]; // asc, desc
-
-            if ( in_array($fieldName, ['id', 'book_name']) && in_array($fieldValue, ['asc', 'desc']) ) {
-                $orderBy = " ORDER BY books." . $fieldName . " " . $fieldValue;
-                $order_parameter = $_GET['order'];
-            }            
-
-        }
-
-    }
-
-    if (!empty($_GET) && isset($_GET['book_name']) && $_GET['book_name'] != '') {
-        $where[] = "books.book_name LIKE '%".$_GET['book_name']."%'";
-        $book_name = $_GET['book_name'];
-    }
-
-    if (!empty($_GET) && isset($_GET['release_date']) && $_GET['release_date'] != '') {
-        $where[] = "books.release_date = ".$_GET['release_date'];
-        $release_date = $_GET['release_date'];
-    }
-
-    if (!empty($where)) {
-        $whereCondition = implode(" AND ", $where);
-    }
-
-    // if($whereCondition != '') {
-    //     $query = "SELECT *  FROM books WHERE " . $whereCondition;
-    // } else {
-    //     $query = "SELECT *  FROM books ";
-    // }
-
-    // $query .= $orderBy;
-     
-    $query = "SELECT books.*, authors.*
-                FROM books 
-                INNER JOIN authors ON books.author_id = authors.id " . ( $whereCondition != '' ? " WHERE ".$whereCondition : '' ) . $orderBy;
-
-    $books = $myDatabase->prepare($query);
-    $books->execute();
-
-?>
-
-<section id="list-section">
+<section id="posts">
     <div class="container">
-        <div class="content">
+        <div class="post-list">
+            <?php while($row = $posts->fetch()) {?>
+                <div class="post-item">
+                    <div class="content">
+                        <h2><?= $row['id'] .' '. $row['title'] ?></h2>
+                        <span style="margin-bottom: 10px;display:inline-block"><?= $row['category_name'] ?></span>
+                        <p><?= $row['short_text'] ?></p>
+                        <a href="article.php?id=<?= $row['id'] ?>">Read More</a>
+                    </div>
+                </div>
+            <?php } ?>
 
-            <div class="filters">
-                <form action="">
-                    <div class="form-group">
-                        <input type="text" 
-                            placeholder="Book Name" 
-                            name="book_name" 
-                            value="<?= $book_name ?>">
-                    </div>
-                    <div class="form-group">
-                        <select name="release_date" id="">
-                            <option value="" <?= $release_date == '' ? 'selected' : '' ?>>Select Year</option>
-                            <?php for ($i=2018; $i < 2023; $i++) { 
-                                ?>
-                                    <option value="<?= $i ?>" <?= $release_date == $i ? 'selected' : '' ?>><?= $i ?></option>
-                                <?php
-                            }?>
-                        
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select name="order" id="">
-                            <option value="" <?= $order_parameter == '' ? 'selected' : '' ?> >Select Order</option>
-                            <option value="id-asc" <?= $order_parameter == 'id-asc' ? 'selected' : '' ?>>Order by ID ASC</option>
-                            <option value="id-desc" <?= $order_parameter == 'id-desc' ? 'selected' : '' ?>>Order by ID DESC</option>
-                            <option value="book_name-asc" <?= $order_parameter == 'book_name-asc' ? 'selected' : '' ?>>Order by Name ASC</option>
-                            <option value="book_name-desc" <?= $order_parameter == 'book_name-desc' ? 'selected' : '' ?>>Order by Name DESC</option>
-                        </select>
-                    </div>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-
-            <table id="book-list">
-                <thead>
-                    <tr>
-                        <td>Id</td>
-                        <td>Book's Name</td>
-                        <td>Author</td>
-                        <td>Release Date</td>
-                        <td>Source</td> 
-                        <td>Actions</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        while($row = $books->fetch()) {
+            <div class="page-container">
+                <div class="pagination">
+                    <?php for ($i=1; $i <= $paging; $i++) { 
                         ?>
-                        <tr>
-                            <td><?= $row["id"]?></td>
-                            <td><?= $row["book_name"]?></td>
-                            <td><?= $row["name"] ?></td>
-                            <td><?= $row["release_date"]?></td>
-                            <td>
-                                <?php 
-                                    if ($row["source"]) {
-                                        if (file_exists('uploads/'.$row['source'])) {
-                                            ?>
-                                                <a target="_blank" href="uploads/<?= $row["source"] ?>"><?= $row["source"] ?></a>
-                                            <?php
-                                        }
-                                    }
-                                 ?>
-                            </td>
-                            <td>
-                                <a href="edit.php?id=<?= $row["id"] ?>" class="action-btn btn-edit">
-                                    Edit
-                                </a>
-                                <button onclick="confirmDelete(this, <?= $row['id'] ?>)">Delete</button>
-                                <!-- <form action="" method="post" onsubmit="return confirmDelete()">
-                                    <input type="hidden" value="delete-book" name="action">
-                                    <input type="hidden" value="<?= $row["id"] ?>" name="id">
-                                    <button type="submit">Delete</button>
-                                </form> -->
-                            </td>
-                        </tr>
-
-                    <?php } ?>
-                </tbody>
-            </table>
+                            <a href="<?= '?page='.$i ?>" class="<?= $currentPage == $i ? 'active' : ''?>"><?= $i ?></a>
+                        <?php
+                    }?>
+                </div>
+            </div>
         </div>
     </div>
 </section>

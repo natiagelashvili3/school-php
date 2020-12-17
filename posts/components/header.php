@@ -1,5 +1,4 @@
 <?php include("database.php") ?>  
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,9 +9,8 @@
 <body id="image">
     <header class="header">
         <div class="menu">
-            <a href="index.php">Posts</a>
-            <a href="add.php">Add Post</a>
-            <a href="categories.php">Categories</a>
-            <a href="add-category.php">Add Category</a>
+           <a href="/posts/index.php">Posts</a>
+           <a href="/posts/add.php">Add</a>
         </div>
-    </header>  
+    </header>   
+

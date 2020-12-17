@@ -1,43 +1,40 @@
-<?php include("components/header.php") ?> 
-
 <?php 
+    include("components/header.php");
+    
+    $query = "SELECT * FROM categories";
+    $categories = $myDatabase->prepare($query);
+    $categories->execute();
+ 
+?> 
 
-$query = "SELECT * FROM authors";
-
-$authors = $myDatabase->prepare($query);
-$authors->execute();
-
-?>
 
 <section id="form-section">
     <div class="container">
         <div class="content">
-            <h1>Insert Book</h1>
+            <h1>Add Post</h1>
             <form id="books" action="actions.php" method="POST" enctype="multipart/form-data">
-                <input type="hidden" value="add-book" name="action">
+                <input type="hidden" value="add-post" name="action">
                 <div>
-                    <label>Book's Name</label>
-                    <input type="text" name="book-name" placeholder="Enter Book's Name">
+                    <label>Title</label>
+                    <input type="text" name="title">
                 </div>
                 <div>
-                    <label>Author</label>
-                    <select name="author_id" id="">
-                        <?php
-                            while($row = $authors->fetch()) {
-                            ?>
+                    <label>Short Text</label>
+                    <input type="text" name="short_text">
+                </div>
+                <div>
+                    <label>Category</label>
+                    <select name="category_id" id="">
+                        <?php while($row = $categories->fetch()) {?>
                             <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div>
-                    <label>Release date</label>
-                    <input type="number" name="release-date" placeholder="Enter Book's release date">
+                    <label>Text</label>
+                    <textarea name="text"></textarea>
                 </div>
-                <div>
-                    <label>Book Source</label>
-                    <input type="file" name="source">
-                </div>
-                <button>Submit</button>
+                <button>Add</button>
             </form>
         </div>
     </div>

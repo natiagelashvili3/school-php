@@ -1,0 +1,154 @@
+@import "fonts.css";
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "roboto-regular";
+}
+
+.header{
+    text-align: right;
+    padding: 19px 25px;
+}
+
+.header a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 21px;
+    margin-right: 7px;
+    padding: 2px 3px;
+}
+
+.header a:hover{
+    border-bottom: 1px solid white;
+}
+
+#image{
+    background-image: url("../images/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+#form-section .container{
+    text-align: center;
+}
+#form-section .content{
+    background-color: white;
+    display: inline-block;
+    padding: 45px 63px;
+    border-radius: 4px;
+    text-align: center;
+    width: 440px;
+    height: 460px;
+    margin: 0 auto;
+}
+
+#form-section .content h1{
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
+#form-section .content form label{
+    display: block;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+#form-section .content form input{
+    width: 454px;
+    padding: 6px 12px;
+    margin-bottom: 20px;
+    border-color: #9287cc;
+    background: transparent;
+}
+#form-section .content form .add-text input{
+    height: 168px;
+}
+#form-section .content form button{
+    background-color:  #9287cc;
+    padding: 8px 18px;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+.container{
+    width: 79%;
+    margin: 0 auto;
+}
+#post .post-list{
+    display: flex;
+    flex-wrap: wrap;  
+}
+#post .post-list .post-item{
+    flex: 0 0 27%; 
+    background: white;
+    border-radius: 3px;
+    margin: 4px 8px;
+
+}
+#post .post-list .post-item .content{
+    width: 85%;
+    margin: 0 auto;
+    padding: 17px;
+}
+
+#post .post-list .post-item .content h1{
+    margin-bottom: 12px;
+}
+#post .post-list .post-item .content p{
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+#post .post-list .post-item .content a{
+    text-decoration: none;
+    color: #8d84bb;
+}
+#post .post-list .post-item .content a:hover{
+    border-bottom: 1px solid #8d84bb;
+}
+#articles .post-article h1{
+    margin-bottom: 9px;
+}
+#articles .comment-container{
+    margin-top: 55px;
+}
+
+#articles .comment-container textarea{
+    width: 57%;
+    height: 177px;
+    margin-top: 9px;
+    border: 2px solid #797979;
+}
+#articles .comment-container button{
+    background-color: #9287cc;
+    padding: 8px 11px;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    margin-top: 12px;
+    font-size: 12px;
+}
+#articles .comment-list li{
+    list-style-type: none;
+    padding: 16px;
+    margin: 10px;
+    background: white;
+    border-radius: 4px;
+}
+#articles .comment-list span{
+    font-style: italic;
+    margin-bottom: 5px;
+    display: inline-block;
+    color: #9287cc;
+    font-size: 14px;
+}
+
+#articles .comment-container h4 {
+    margin-top: 28px;
+    margin-bottom: -3px;
+}
