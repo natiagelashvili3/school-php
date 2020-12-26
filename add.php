@@ -1,5 +1,9 @@
 <?php 
     include("components/header.php");
+
+    if(!isset($_SESSION['user_id'])){
+        header('Location: index.php');
+    }
     
     $query = "SELECT * FROM categories";
     $categories = $myDatabase->prepare($query);
@@ -14,6 +18,7 @@
             <h1>Add Post</h1>
             <form id="books" action="actions.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" value="add-post" name="action">
+                <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>">
                 <div>
                     <label>Title</label>
                     <input type="text" name="title">

@@ -1,4 +1,7 @@
-<?php include("database.php") ?>  
+<?php
+    session_start();
+    include("database.php");
+?>  
 
 <html lang="en">
 <head>
@@ -10,9 +13,17 @@
 <body id="image">
     <header class="header">
         <div class="menu">
-            <a href="index.php">Posts</a>
-            <a href="add.php">Add Post</a>
+            <a href="index.php">Home</a>
             <a href="categories.php">Categories</a>
-            <a href="add-category.php">Add Category</a>
+
+            <?php if(isset($_SESSION) && isset($_SESSION['user_id'])){ ?>
+                <a href="add.php">Add Post</a>
+                <a href="add-category.php">Add Category</a>
+                <a href="account.php">Account</a>
+                <a href="logout.php">Logout</a>
+            <?php } else { ?>
+                <a href="login.php">Login / Registration</a>
+            <?php } ?>
+            
         </div>
     </header>  

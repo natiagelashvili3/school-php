@@ -8,13 +8,15 @@ if(isset($_POST) && isset($_POST['action'])) {
 
     if(isset($_POST['action']) && $_POST['action'] == 'add-post') {
 
-        $insert_query = "INSERT INTO posts (`title`, `short_text`, `text`, `category_id`) VALUES (?, ?, ?, ?)";
+        $insert_query = "INSERT INTO posts (`title`, `short_text`, `text`, `category_id`, `user_id`) 
+                               VALUES (?, ?, ?, ?, ?)";
 
         $myDatabase->prepare($insert_query)->execute([
             $_POST['title'],
             $_POST['short_text'],
             $_POST['text'],
             $_POST['category_id'],
+            $_POST['user_id']
             ]);
 
         header("Location: add.php" );

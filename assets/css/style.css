@@ -16,28 +16,30 @@
 
 .header{
     text-align: right;
-    padding: 19px 25px;
+    padding: 30px 25px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 18px -8px rgba(148,148,148,0.31);
+    -moz-box-shadow: 0px 0px 18px -8px rgba(148,148,148,0.31);
+    box-shadow: 0px 0px 18px -8px rgba(148,148,148,0.31);
 }
 
 .container {
     width: 80%;
     margin: 0 auto;
 }
-
 .header a{
     text-decoration: none;
     color: #464646;
-    font-size: 21px;
-    margin-right: 7px;
+    font-size: 16px;
+    margin-right: 10px;
     padding: 2px 3px;
 }
-
 .header a:hover{
     border-bottom: 1px solid white;
 }
 
 #image{
-    background-color: #ececec;
+    background-color: #f8f8f8;
 }
 #form-section{
     margin-top: 27px;
@@ -85,7 +87,7 @@ form button{
     border: none;
     border-radius: 3px;
     margin-top: 10px;
-    font-size: 15px;action-btn
+    font-size: 15px;
 }
 #form-section .content form .error{
     font-size: 14px;
@@ -142,28 +144,49 @@ form button{
 
 
 .post-list{
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
 }
 
 .post-item{
-    flex: 0 0 25%;
+    /* flex: 0 0 25%; */
+    margin-bottom: 20px;
 }
 .post-item .content{
     width: 80%;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #c3c3c3;
+    border-radius: 7px;
+    background: white;
+    -webkit-box-shadow: 0px 0px 18px -8px rgba(148,148,148,0.31);
+    -moz-box-shadow: 0px 0px 18px -8px rgba(148,148,148,0.31);
+    box-shadow: 0px 0px 18px -8px rgba(148,148,148,0.31);
 }
 .post-item .content h2,
 .post-item .content p{
     margin-bottom: 10px;
 }
-
-#posts{
-    margin-top: 100px;
+.post-item .post-cat{
+    margin-bottom: 10px;
+    display:inline-block;
+    font-size: 14px;
 }
-
+#posts{
+    margin-top: 50px;
+}
+.post-item a{
+    font-size: 10px;
+}
+.post-item a.link{
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    margin-top: 10px;
+    display: inline-block;
+    background: #273c75;
+    padding: 7px 12px;
+    border-radius: 5px;
+}
 .post-artcile h1{
     margin-bottom: 10px;
 }
@@ -230,4 +253,15 @@ th, td {
 
 .pagination a:hover:not(.active) {
     background-color: #ddd;
+}
+#article{
+    margin-top: 50px;
+}
+.register-href{
+    margin-top: 20px;
+}
+.register-href a{
+    text-decoration: none;
+    color: #464646;
+    font-size: 14px;
 }
