@@ -22,7 +22,29 @@
     $posts = $myDatabase->prepare($query);
     $posts->execute();
 
+    if ( isset($_COOKIE['visits']) ) {
+
+        $cnt = $_COOKIE['visits'] + 1;
+
+        if($_COOKIE['time'] - time() > 0) {
+            setcookie('visits', $cnt, time() + ($_COOKIE['time'] - time()) );
+        }
+        
+    } else {
+        setcookie('time', time() + 3600 );
+        setcookie('visits', '1', time() + 3600);
+    }
+
+    $visits = isset($_COOKIE['visits']) ? $_COOKIE['visits'] : 1;
+
+    
+
 ?>  
+
+
+<section class="lifetime">
+    Your visits: <?= $visits ?> times
+</section>
 
 <section id="posts">
     <div class="container">
